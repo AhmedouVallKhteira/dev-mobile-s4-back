@@ -24,7 +24,6 @@ public class Commande {
     private String codeSecret;
     private String statut;
     private LocalDateTime dateCreation;
-    private boolean isActive; 
 
     @ManyToOne
     private Utilisateur utilisateur;
@@ -164,11 +163,4 @@ public class Commande {
                 '}';
     }
 
-    public boolean isIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
 }

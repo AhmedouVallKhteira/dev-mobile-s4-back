@@ -25,11 +25,15 @@ public class CommandeController {
         this.commandeService = commandeService;
     }
 
-    @PostMapping
-    public ResponseEntity<Commande> creerCommande(@RequestBody Commande commande) {
-        Commande saved = commandeService.creerCommande(commande);
+    @PostMapping("/{utilisateurId}")
+    public ResponseEntity<Commande> creerCommande(
+            @RequestBody Commande commande,
+            @PathVariable("utilisateurId") Long utilisateurId) {
+           
+        Commande saved = commandeService.creerCommande(commande, utilisateurId);
         return ResponseEntity.ok(saved);
     }
+
 
     @GetMapping("/utilisateur/{utilisateurId}")
     public List<Commande> getByUtilisateur(@PathVariable Long utilisateurId) {

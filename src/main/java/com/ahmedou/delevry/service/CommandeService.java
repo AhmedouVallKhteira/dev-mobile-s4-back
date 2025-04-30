@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.ahmedou.delevry.model.Commande;
 import com.ahmedou.delevry.model.Livreur;
+import com.ahmedou.delevry.model.Utilisateur;
 import com.ahmedou.delevry.repository.CommandeRepository;
 import com.ahmedou.delevry.repository.LivreurRepository;
+import com.ahmedou.delevry.repository.UtilisateurRepository;
 import com.ahmedou.delevry.utils.GeoUtils;
 
 @Service
@@ -21,13 +23,20 @@ public class CommandeService {
 
     private final CommandeRepository commandeRepository;
     private final LivreurRepository livreurRepository;
+    private final UtilisateurRepository utilisateurRepository;
 
-    public CommandeService(CommandeRepository commandeRepository, LivreurRepository livreurRepository) {
+    public CommandeService(CommandeRepository commandeRepository, LivreurRepository livreurRepository ,
+                           UtilisateurRepository utilisateurRepository) {
         this.commandeRepository = commandeRepository;
         this.livreurRepository = livreurRepository;
+        this.utilisateurRepository = utilisateurRepository;
     }
 
-    public Commande creerCommande(Commande commande) {
+    public Commande creerCommande(Commande commande ,Long utilisateurId) {
+        Utilisateur utilisateur = utilisateurRepository.findById(utilisateurId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+        commande.setUtilisateur(utilisateur);
+
         String code = UUID.randomUUID().toString().substring(0, 5).toUpperCase();
         commande.setCodeSecret(code);
         commande.setDateCreation(LocalDateTime.now());
