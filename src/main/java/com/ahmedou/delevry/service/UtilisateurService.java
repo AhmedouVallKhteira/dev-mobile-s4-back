@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ahmedou.delevry.model.Livreur;
 import com.ahmedou.delevry.model.Utilisateur;
 import com.ahmedou.delevry.repository.UtilisateurRepository;
 
@@ -40,4 +41,7 @@ public class UtilisateurService {
     public void supprimer(Long id) {
         utilisateurRepository.deleteById(id);
     }
+
+    
+    
 }

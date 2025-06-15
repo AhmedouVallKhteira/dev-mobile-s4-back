@@ -35,6 +35,12 @@ public class CommandeController {
     }
 
 
+    @GetMapping
+    public List<Commande> getAllCommandes() {
+        return commandeService.getAllCommandes();
+    }
+
+
     @GetMapping("/utilisateur/{utilisateurId}")
     public List<Commande> getByUtilisateur(@PathVariable Long utilisateurId) {
         return commandeService.getByUtilisateur(utilisateurId);
@@ -95,6 +101,30 @@ public class CommandeController {
             @RequestParam String statut) {
         return commandeService.getByUtilisateurAndStatut(utilisateurId, statut);
     }
+
+    @GetMapping("/livreur/{livreurId}/proches")
+    public List<Commande> getCommandesProches(@PathVariable Long livreurId) {
+        // return commandeService.getCommandePlusProcheEnAttente(livreurId);
+        return commandeService.getEnAttente();
+    }
+
+    @GetMapping("/livreur/{livreurId}/livrees")
+    public List<Commande> getCommandesLivrees(@PathVariable Long livreurId) {
+        return commandeService.getCommandesLivreesParLivreur(livreurId);
+    }
+
+    @PostMapping("/{commandeId}/accepter/{livreurId}")
+    public ResponseEntity<?> accepterCommande(
+            @PathVariable Long commandeId,
+            @PathVariable Long livreurId) throws IllegalStateException {
+        try {
+            commandeService.accepterCommande(commandeId, livreurId);
+            return ResponseEntity.ok().body("Commande acceptée");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 
 }

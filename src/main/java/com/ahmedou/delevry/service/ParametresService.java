@@ -28,4 +28,9 @@ public class ParametresService {
         }
         return parametresRepository.save(p);
     }
+
+    public double getTauxCommission() {
+        Parametres p = getParametresActuels();
+        return p != null ? p.getTauxCommission() : 0.1; 
+    }
 }

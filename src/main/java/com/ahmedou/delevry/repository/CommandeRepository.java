@@ -1,5 +1,6 @@
 package com.ahmedou.delevry.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,9 @@ public interface CommandeRepository extends JpaRepository<Commande, Long> {
     List<Commande> findByLivreurId(Long livreurId);
     List<Commande> findByStatut(String statut);
     List<Commande> findByUtilisateurIdAndStatut(Long utilisateurId, String statut);
+    List<Commande> findByLivreurIdAndStatut(Long livreurId, String statut);
+    List<Commande> findByLivreurIdAndStatutAndDateCreationBetween(
+    Long livreurId, String statut, LocalDateTime start, LocalDateTime end);
+
 }
 

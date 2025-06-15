@@ -36,6 +36,18 @@ public class UtilisateurController {
         return ResponseEntity.ok(saved);
     }
 
+    @PostMapping("/admin")
+public ResponseEntity<?> registerAdmin(@RequestBody Utilisateur utilisateur) {
+    if (utilisateurService.emailExiste(utilisateur.getTel())) {
+        return ResponseEntity.badRequest().body("Téléphone déjà utilisé.");
+    }
+
+    utilisateur.setRole(Role.ADMIN); // force role admin
+    Utilisateur saved = utilisateurService.enregistrer(utilisateur);
+    return ResponseEntity.ok(saved);
+}
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Utilisateur> getUtilisateurById(@PathVariable Long id) {
         return utilisateurService.getById(id)

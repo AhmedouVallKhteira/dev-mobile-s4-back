@@ -21,7 +21,7 @@ public class FileStorageService {
     private String uploadDir;
 
     public String saveFile(String filename, MultipartFile file) throws IOException {
-        Path uploadPath = Paths.get(uploadDir);
+        Path uploadPath = Paths.get(System.getProperty("user.dir")).resolve(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }

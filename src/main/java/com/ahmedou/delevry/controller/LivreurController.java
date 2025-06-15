@@ -108,4 +108,33 @@ public class LivreurController {
         livreurService.payerDette(id, montant);
         return ResponseEntity.ok("Dette payée.");
     }
+
+    @PutMapping("/{id}/position")
+    public ResponseEntity<String> updatePosition(
+            @PathVariable Long id,
+            @RequestParam Double latitude,
+            @RequestParam Double longitude) {
+        livreurService.mettreAJourPosition(id, latitude, longitude);
+        return ResponseEntity.ok("Position mise à jour.");
+    }
+
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<?> getTransactionsPourPeriode(
+            @PathVariable Long id,
+            @RequestParam String debut,
+            @RequestParam String fin) {
+        try {
+            return ResponseEntity.ok(livreurService.calculerTransactions(id, debut, fin));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erreur: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/solde")
+    public ResponseEntity<Double> getSolde(@PathVariable Long id) {
+        Double solde = livreurService.getSoldeById(id);
+        return ResponseEntity.ok(solde);
+    }
+
+
 }
