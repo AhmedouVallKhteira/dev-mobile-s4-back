@@ -1,5 +1,5 @@
 
-    FROM eclipse-temurin:17-jdk AS build
+    FROM eclipse-temurin:21-jdk AS build
 
     WORKDIR /app
     
@@ -9,7 +9,7 @@
     
     RUN ./mvnw clean package -DskipTests
     
-    FROM eclipse-temurin:17-jdk AS runtime
+    FROM eclipse-temurin:21-jdk AS runtime
     
     WORKDIR /app
     
